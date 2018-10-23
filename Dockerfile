@@ -1,8 +1,9 @@
-FROM ubuntu:latest
+FROM ubuntu:xenial
 
 ENV DISPLAY :99
 
 RUN apt-get update \
+  && echo -n 'Etc/UTC' > /etc/timezone \
   && apt-get install -y software-properties-common apt-transport-https wget unzip build-essential \
   && apt-add-repository -y ppa:freecad-maintainers/freecad-stable \
   && add-apt-repository -y ppa:freecad-community/ppa \
@@ -27,7 +28,7 @@ USER user
 
 ENV USER user
 
-RUN cd /opt
+WORKDIR /opt
 COPY ./ ./
 
 ENTRYPOINT /opt/entrypoint.sh
